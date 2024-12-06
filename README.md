@@ -71,11 +71,9 @@ This project automates the extraction, validation, and transformation of key fie
 
 To set up the project, follow these steps:
 
-### 1. Clone the Repository
-
-First, clone the repository to your local machine:
 
 ```bash
+### 1. Clone the repository
 git clone <repository_url>
 cd <project_directory>'''
 
@@ -88,10 +86,17 @@ To set up the project and run it locally, follow the steps below:
 It's highly recommended to use a virtual environment to isolate your dependencies. You can create and activate one using the following commands:
 
 #### On Windows:
-```bash
 python -m venv venv
 .\venv\Scripts\activate
 
+<<<<<<< HEAD
 ```bash
 python main.py
+=======
+### 3. Install Requirements.txt
+### 4. Run the main.py
+
+
+Voila!!!
+>>>>>>> 614a4d0f702f90d34e53dc4f4e37ba55e5adf98d
 
