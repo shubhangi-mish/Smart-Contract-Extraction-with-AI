@@ -4,6 +4,8 @@ import spacy
 from openai import OpenAI
 from Regex_nlp_validation import validate_contract_amount, extract_billing_frequency, extract_contract_id, extract_contract_type, extract_customer_name, extract_date, extract_payment_terms
 from Evaluation_metrics import evaluate_extraction
+from Zenskar_api import send_contract_to_zenskar
+
 nlp = spacy.load("en_core_web_sm")
 
 client = OpenAI(api_key='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')
@@ -17,11 +19,8 @@ def call_openai_api(prompt):
             max_tokens=150,
             temperature=0.7
         )
-        
-        # Extract the content from the response, assuming it's wrapped under choices[0].message.content
         message = response.choices[0].message.content
         
-        # Return the content (avoid "null" responses)
         return message if message.lower() != "null" else None
     except Exception as e:
         print(f"Error: {e}")
@@ -34,6 +33,10 @@ def read_file(file_path):
     except Exception as e:
         print(f"Error reading file: {e}")
         return None
+    
+def extract_currency(order_form_text):
+    prompt = f"Extract the currency of transaction from the following text and only give the currency abbreviation stictly (eg, USD,INR etc) if nothing give none.\n\n{order_form_text}"
+    return call_openai_api(prompt)
 
 def extract_contract_id(order_form_text):
     prompt = f"Extract the contract ID from the following text and only give the ID if nothing give none.\n\n{order_form_text}"
@@ -134,6 +137,8 @@ def extract_contract_type_confidence(order_form_text):
     
 def extract_all_data(order_form_text):
     extracted_data = {
+        "Currency": extract_currency(order_form_text),
+
         "Contract ID": extract_contract_id(order_form_text),
         "Contract ID Reasoning": extract_contract_id_reasoning(order_form_text),
         "Contract ID Confidence": extract_contract_id_confidence(order_form_text),
@@ -169,6 +174,8 @@ def extract_all_data(order_form_text):
 
 
     contract_data = {
+        "Currency":extracted_data.get("Currency", ""),
+
         "Contract ID": {
             "extracted_value": extracted_data.get("Contract ID", ""),
             "reasoning": extracted_data.get("Contract ID Reasoning", ""),
@@ -213,10 +220,13 @@ def extract_all_data(order_form_text):
         }
     }
     evaluate_extraction(contract_data)
+    send_contract_to_zenskar(contract_data)
     return contract_data
 
 
 def validate_extracted_data(extracted_data, order_form_text):
+    if not extracted_data.get("Currency"):
+        extracted_data["Currency"]= extract_currency(order_form_text)
     if not extracted_data.get("Contract ID"):
         extracted_data["Contract ID"] = extract_contract_id(order_form_text)
     if not extracted_data.get("Customer Name"):

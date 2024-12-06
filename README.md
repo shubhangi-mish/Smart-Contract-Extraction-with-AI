@@ -65,6 +65,8 @@ This project automates the extraction, validation, and transformation of key fie
 - **Matplotlib** and **Scikit-Learn** for plotting evaluation metrics
 - **Dynamic Prompts** for flexible LLM queries
 
+![alt text](image.png)
+
 ## Installation Instructions
 
 To set up the project, follow these steps:
@@ -89,4 +91,7 @@ It's highly recommended to use a virtual environment to isolate your dependencie
 ```bash
 python -m venv venv
 .\venv\Scripts\activate
+
+```bash
+python main.py
 

@@ -2,7 +2,6 @@ import os
 import json
 from pdf2txt import process_pdfs
 from Extraction import extraction_prompt_from_dir  
-from Zenskar_api import send_contract_to_zenskar
 from highlights import process_directory
 
 def main(pdf_directory, output_txt_directory, output_json_directory, summary_report_path):
@@ -43,11 +42,6 @@ def main(pdf_directory, output_txt_directory, output_json_directory, summary_rep
         except Exception as e:
             error_message = f"Error highlighting and annotating {filename}: {str(e)}"
             summary_report["errors"].append(error_message)
-    '''
-    for contract in all_contracts.values():
-        response = send_contract_to_zenskar(contract)
-        print(f"API Response: {response}")
-    '''
     
     try:
         with open(summary_report_path, 'w', encoding='utf-8') as summary_file:
