@@ -1,1 +1,12 @@
-{}
+{
+    "Contract ID": null,
+    "Customer Name": "Company B",
+    "Contract Start Date": "2023-12-13",
+    "Contract End Date": "2026-12-13",
+    "Payment Terms": "Upfront, Monthly, Net 30",
+    "Contract Amount": "$25,000",
+    "Metadata": {
+        "Billing Frequency": "Monthly",
+        "Contract Type": "Professional Services"
+    }
+}
