@@ -3,7 +3,6 @@ import json
 import spacy
 from openai import OpenAI
 from Regex_nlp_validation import validate_contract_amount, extract_billing_frequency, extract_contract_id, extract_contract_type, extract_customer_name, extract_date, extract_payment_terms
-import multiprocessing
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -215,6 +214,7 @@ def extract_all_data(order_form_text):
         }
     }
     return contract_data
+
 
 def validate_extracted_data(extracted_data, order_form_text):
     if not extracted_data.get("Contract ID"):

@@ -3,6 +3,7 @@ import json
 from pdf2txt import process_pdfs
 from Extraction import extraction_prompt_from_dir  
 from Zenskar_api import send_contract_to_zenskar
+from highlights import process_directory
 
 def main(pdf_directory, output_txt_directory, output_json_directory, summary_report_path):
     summary_report = {
@@ -36,7 +37,12 @@ def main(pdf_directory, output_txt_directory, output_json_directory, summary_rep
             error_message = f"Error saving data for {filename}: {str(e)}"
             summary_report["errors"].append(error_message)
             summary_report["file_errors"][filename] = error_message
-    
+        try:
+            process_directory(pdf_directory,output_json_directory,highlighted_directory) 
+            print(f"Processed and saved highlighted PDF: {highlighted_directory}")
+        except Exception as e:
+            error_message = f"Error highlighting and annotating {filename}: {str(e)}"
+            summary_report["errors"].append(error_message)
     '''
     for contract in all_contracts.values():
         response = send_contract_to_zenskar(contract)
@@ -55,8 +61,9 @@ if __name__ == "__main__":
     output_txt_directory = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\SM_Extracted"
     output_json_directory = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\SM_JSON"
     summary_report_path = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\summary_report.json"
-
+    highlighted_directory = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\Highlighted pdf"
     os.makedirs(output_txt_directory, exist_ok=True)
     os.makedirs(output_json_directory, exist_ok=True)
+    os.makedirs(highlighted_directory, exist_ok=True)
     
     main(pdf_directory, output_txt_directory, output_json_directory, summary_report_path)

@@ -1,43 +1,43 @@
 {
     "Contract ID": {
         "extracted_value": "SOW-CFCU-WCOBCMC-2023",
-        "reasoning": "The extracted contract ID from the document is \"SOW-CFCU-WCOBCMC-2023,\" identified as the specific reference for the services provided.",
-        "confidence": "0"
+        "reasoning": "The contract ID extracted is \"SOW-CFCU-WCOBCMC-2023\" as it is the unique identifier provided in the Order Form under the product description for Product A.",
+        "confidence": "0.9"
     },
     "Customer Name": {
         "extracted_value": "Company B",
-        "reasoning": "Customer name extracted: Company B; extracted based on \"Client Company Name\" field.",
+        "reasoning": "Customer name extracted: Company B; Reason: The client name was mentioned explicitly in the Client Information section.",
         "confidence": "0.9"
     },
     "Contract Start Date": {
         "extracted_value": "2023-12-13",
-        "reasoning": "The contract start date is not explicitly mentioned but can be inferred as December 15, 2023, based on the \"Order Form Acceptance and Authorization\" section and the signing date.",
+        "reasoning": "The contract start date is not explicitly mentioned, but it will be based on the \"Go Live\" date or the signing date anniversary if not implemented within one year; therefore, it cannot be extracted directly.",
         "confidence": "0.9"
     },
     "Contract End Date": {
         "extracted_value": "2026-12-13",
-        "reasoning": "The contract end date cannot be explicitly extracted as the document provides an expiration timeframe but lacks a specific date marking the end of the contract.",
-        "confidence": "0.9"
+        "reasoning": "The contract end date cannot be extracted as it is contingent upon the \"Go Live\" date, which is not specified in the document.",
+        "confidence": "0.95"
     },
     "Payment Terms": {
         "extracted_value": "Upfront, Net 30",
-        "reasoning": "Payment terms extracted as \"All fees are due Net 30 days from invoice date.\"",
+        "reasoning": "Payment terms extracted: \"All fees are due Net 30 days from invoice date.\"",
         "confidence": "0.9"
     },
     "Contract Amount": {
         "extracted_value": "$25,000",
-        "reasoning": "The contract amount extracted is $25,000 for one-time fees and $6,300 for monthly subscription fees, totaling $31,300, as these values are explicitly stated in the document.",
-        "confidence": "0.99"
+        "reasoning": "The contract amount extracted is $31,300, which is the sum of the one-time fees ($25,000) and the total subscription fees over the first year ($6,300).",
+        "confidence": "0.95"
     },
     "Metadata": {
         "Billing Frequency": {
             "extracted_value": "Monthly",
-            "reasoning": "Billing frequency extracted: Monthly; reason: it is explicitly listed under \"Subscription Billing.\"",
-            "confidence": "1.0"
+            "reasoning": "Billing frequency extracted: Monthly; extracted due to explicit mention in the document.",
+            "confidence": "0.95"
         },
         "Contract Type": {
             "extracted_value": "Professional Services, Subscription Services",
-            "reasoning": "Contract type extracted as \"Order Form\" based on the document's title indicating a formal agreement for services.",
+            "reasoning": "The contract type is an \"Order Form\" as explicitly stated at the beginning of the document.",
             "confidence": "0.9"
         }
     }
