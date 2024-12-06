@@ -1,7 +1,7 @@
 import os
 import json
 from pdf2txt import process_pdfs
-from Extraction import extraction_prompt, extraction_prompt_from_dir  
+from Extraction import extraction_prompt_from_dir  
 from Zenskar_api import send_contract_to_zenskar
 
 def main(pdf_directory, output_txt_directory, output_json_directory, summary_report_path):

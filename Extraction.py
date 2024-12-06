@@ -3,6 +3,7 @@ import json
 import spacy
 from openai import OpenAI
 from Regex_nlp_validation import validate_contract_amount, extract_billing_frequency, extract_contract_id, extract_contract_type, extract_customer_name, extract_date, extract_payment_terms
+import multiprocessing
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -21,6 +22,7 @@ def call_openai_api(prompt):
         # Extract the content from the response, assuming it's wrapped under choices[0].message.content
         message = response.choices[0].message.content
         
+        print(message)
         # Return the content (avoid "null" responses)
         return message if message.lower() != "null" else None
     except Exception as e:
@@ -35,51 +37,205 @@ def read_file(file_path):
         print(f"Error reading file: {e}")
         return None
 
-def extraction_prompt(order_form_text):
-    prompts = {
-        "Contract ID": f"Extract the 'Order Form Number' from the following text and only give the ID if nothing then Null:\n\n{order_form_text}",
-        "Customer Name": f"Extract the 'Client Company Name' from the following text and give only the name nothing else:\n\n{order_form_text}",
-        "Contract Start Date": f"Extract the 'Date' which is the contract start date from the following text: give only the date and in format YYYY-MM-DD\n\n{order_form_text}",
-        "Contract End Date": f"Extract the 'End of service date' from the following text. If it is not directly mentioned, determine it based on the provided renewal terms and give only the date no words in the format YYYY-MM-DD:\n\n{order_form_text}",
-        "Payment Terms": f"Extract the 'Payment Terms' from the following text: give only the term no sentences\n\n{order_form_text}",
-        "Contract Amount": f"Extract the total 'Contract Amount' for professional services from the following text. This should be found under the 'Total' for 'Professional Services', give only the amount directly:\n\n{order_form_text}",
-        "Billing Frequency": f"Extract the 'Billing Frequency' from the following text: only one word\n\n{order_form_text}",
-        "Contract Type": f"Extract the 'Contract Type' from the following text. The contract type includes the categories such as 'Professional Services' and 'Subscription Services' there can be only one give that only no sentences:\n\n{order_form_text}"
+def extract_contract_id(order_form_text):
+    prompt = f"Extract the contract ID from the following text and only give the ID if nothing give none.\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_contract_id_reasoning(order_form_text):
+    prompt = f"Include a reasoning log sentence for contract ID extraction result in one line only. do not make headings give only 1 line answers strictly\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_contract_id_confidence(order_form_text):
+    prompt = f"Include the confidence level in number (0-1) for the extraction of the contract ID based on the provided text and give only the number strictly no headings no sentence.\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_customer_name(order_form_text):
+    prompt = f"Extract the 'Client Company Name' from the following text and give only the name, nothing else.\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_customer_name_reasoning(order_form_text):
+    prompt = f"Include a reasoning log sentence for customer name extraction and reason if not extracted in one line only do not make headings give only 1 line answers strictly.\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_customer_name_confidence(order_form_text):
+    prompt = f"Include the confidence level in number (0-1) for the extraction of the customer name based on the provided text and give only the number strictly no headings no sentence.\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_contract_start_date(order_form_text):
+    prompt = f"Extract the 'Date' which is the contract start date from the following text. Provide only the date in YYYY-MM-DD format strictly\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_contract_start_date_reasoning(order_form_text):
+    prompt = f"Include a reasoning log sentence for contract start date extraction and reason if not extracted in one line only do not make headings give only 1 line answers strictly.\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_contract_start_date_confidence(order_form_text):
+    prompt = f"Include the confidence level in number (0-1) for the extraction of the contract start date based on the provided text and give only the number strictly no headings no sentence.\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_contract_end_date(order_form_text):
+    prompt = f"Extract the 'End of service date' from the following text. If it is not directly mentioned, determine it based on the provided renewal terms and give only the date in YYYY-MM-DD format strictly:\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_contract_end_date_reasoning(order_form_text):
+    prompt = f"Include a reasoning log sentence for contract end date extraction and reason if not extracted in one line only do not make headings give only 1 line answers strictly.\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_contract_end_date_confidence(order_form_text):
+    prompt = f"Include the confidence level in number (0-1) for the extraction of the contract end date based on the provided text and give only the number strictly no headings no sentence.\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_payment_terms(order_form_text):
+    prompt = f"Extract the 'Payment Terms' from the following text. Provide only the term \n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_payment_terms_reasoning(order_form_text):
+    prompt = f"Include a reasoning log sentence for payment terms extraction and reason if not extracted in one line only do not make headings give only 1 line answers strictly.\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_payment_terms_confidence(order_form_text):
+    prompt = f"Include the confidence level in number (0-1) for the extraction of the payment terms based on the provided text and give only the number strictly no headings no sentence.\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_contract_amount(order_form_text):
+    prompt = f"Extract the total 'Contract Amount' for professional services from the following text. Provide only the amount directly \n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_contract_amount_reasoning(order_form_text):
+    prompt = f"Include a reasoning log sentence for contract amount extraction and reason if not extracted in one line only do not make headings give only 1 line answers strictly.\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_contract_amount_confidence(order_form_text):
+    prompt = f"Include the confidence level in number (0-1) for the extraction of the contract amount based on the provided text and give only the number strictly no headings no sentence.\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_billing_frequency(order_form_text):
+    prompt = f"Extract the 'Billing Frequency' from the following text. Only one word is needed \n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_billing_frequency_reasoning(order_form_text):
+    prompt = f"Include a reasoning log sentence for billing frequency extraction and reason if not extracted in one line only do not make headings give only 1 line answers strictly.\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_billing_frequency_confidence(order_form_text):
+    prompt = f"Include the confidence level in number (0-1) for the extraction of the billing frequency based on the provided text and give only the number strictly no headings no sentence.\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_contract_type(order_form_text):
+    prompt = f"Extract the 'Contract Type' from the following text. The contract type includes the categories such as 'Professional Services' and 'Subscription Services'. Provide only the type along \n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_contract_type_reasoning(order_form_text):
+    prompt = f"Include a reasoning log sentence for contract type extraction and reason if not extracted in one line only do not make headings give only 1 line answers strictly.\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+def extract_contract_type_confidence(order_form_text):
+    prompt = f"Include the confidence level in number (0-1) for the extraction of the contract type based on the provided text and give only the number strictly no headings no sentence.\n\n{order_form_text}"
+    return call_openai_api(prompt)
+
+    
+def extract_all_data(order_form_text):
+    extracted_data = {
+        "Contract ID": extract_contract_id(order_form_text),
+        "Contract ID Reasoning": extract_contract_id_reasoning(order_form_text),
+        "Contract ID Confidence": extract_contract_id_confidence(order_form_text),
+        
+        "Customer Name": extract_customer_name(order_form_text),
+        "Customer Name Reasoning": extract_customer_name_reasoning(order_form_text),
+        "Customer Name Confidence": extract_customer_name_confidence(order_form_text),
+        
+        "Contract Start Date": extract_contract_start_date(order_form_text),
+        "Contract Start Date Reasoning": extract_contract_start_date_reasoning(order_form_text),
+        "Contract Start Date Confidence": extract_contract_start_date_confidence(order_form_text),
+        
+        "Contract End Date": extract_contract_end_date(order_form_text),
+        "Contract End Date Reasoning": extract_contract_end_date_reasoning(order_form_text),
+        "Contract End Date Confidence": extract_contract_end_date_confidence(order_form_text),
+        
+        "Payment Terms": extract_payment_terms(order_form_text),
+        "Payment Terms Reasoning": extract_payment_terms_reasoning(order_form_text),
+        "Payment Terms Confidence": extract_payment_terms_confidence(order_form_text),
+        
+        "Contract Amount": extract_contract_amount(order_form_text),
+        "Contract Amount Reasoning": extract_contract_amount_reasoning(order_form_text),
+        "Contract Amount Confidence": extract_contract_amount_confidence(order_form_text),
+        
+        "Billing Frequency": extract_billing_frequency(order_form_text),
+        "Billing Frequency Reasoning": extract_billing_frequency_reasoning(order_form_text),
+        "Billing Frequency Confidence": extract_billing_frequency_confidence(order_form_text),
+        
+        "Contract Type": extract_contract_type(order_form_text),
+        "Contract Type Reasoning": extract_contract_type_reasoning(order_form_text),
+        "Contract Type Confidence": extract_contract_type_confidence(order_form_text),
     }
 
-    extracted_data = {field: call_openai_api(prompt) for field, prompt in prompts.items()}
-
-    if not extracted_data["Contract ID"]:
-        extracted_data["Contract ID"] = extract_contract_id(order_form_text)
-    if not extracted_data["Customer Name"]:
-        extracted_data["Customer Name"] = extract_customer_name(order_form_text)
-    if not extracted_data["Contract Start Date"]:
-        extracted_data["Contract Start Date"] = extract_date(order_form_text)
-    if not extracted_data["Contract End Date"]:
-        extracted_data["Contract End Date"] = extract_date(order_form_text)
-    if not extracted_data["Payment Terms"]:
-        extracted_data["Payment Terms"] = extract_payment_terms(order_form_text)
-    if not extracted_data["Contract Amount"]:
-        extracted_data["Contract Amount"] = validate_contract_amount(extracted_data.get("Contract Amount", ""))
-    if not extracted_data["Billing Frequency"]:
-        extracted_data["Billing Frequency"] = extract_billing_frequency(order_form_text)
-    if not extracted_data["Contract Type"]:
-        extracted_data["Contract Type"] = extract_contract_type(order_form_text)
 
     contract_data = {
-        "Contract ID": extracted_data.get("Contract ID"),
-        "Customer Name": extracted_data.get("Customer Name"),
-        "Contract Start Date": extracted_data.get("Contract Start Date"),
-        "Contract End Date": extracted_data.get("Contract End Date"),
-        "Payment Terms": extracted_data.get("Payment Terms"),
-        "Contract Amount": extracted_data.get("Contract Amount"),
+        "Contract ID": {
+            "extracted_value": extracted_data.get("Contract ID", ""),
+            "reasoning": extracted_data.get("Contract ID Reasoning", ""),
+            "confidence": extracted_data.get("Contract ID Confidence", "")
+        },
+        "Customer Name": {
+            "extracted_value": extracted_data.get("Customer Name", ""),
+            "reasoning": extracted_data.get("Customer Name Reasoning", ""),
+            "confidence": extracted_data.get("Customer Name Confidence", "")
+        },
+        "Contract Start Date": {
+            "extracted_value": extracted_data.get("Contract Start Date", ""),
+            "reasoning": extracted_data.get("Contract Start Date Reasoning", ""),
+            "confidence": extracted_data.get("Contract Start Date Confidence", "")
+        },
+        "Contract End Date": {
+            "extracted_value": extracted_data.get("Contract End Date", ""),
+            "reasoning": extracted_data.get("Contract End Date Reasoning", ""),
+            "confidence": extracted_data.get("Contract End Date Confidence", "")
+        },
+        "Payment Terms": {
+            "extracted_value": extracted_data.get("Payment Terms", ""),
+            "reasoning": extracted_data.get("Payment Terms Reasoning", ""),
+            "confidence": extracted_data.get("Payment Terms Confidence", "")
+        },
+        "Contract Amount": {
+            "extracted_value": extracted_data.get("Contract Amount", ""),
+            "reasoning": extracted_data.get("Contract Amount Reasoning", ""),
+            "confidence": extracted_data.get("Contract Amount Confidence", "")
+        },
         "Metadata": {
-            "Billing Frequency": extracted_data.get("Billing Frequency"),
-            "Contract Type": extracted_data.get("Contract Type")
+            "Billing Frequency": {
+                "extracted_value": extracted_data.get("Billing Frequency", ""),
+                "reasoning": extracted_data.get("Billing Frequency Reasoning", ""),
+                "confidence": extracted_data.get("Billing Frequency Confidence", "")
+            },
+            "Contract Type": {
+                "extracted_value": extracted_data.get("Contract Type", ""),
+                "reasoning": extracted_data.get("Contract Type Reasoning", ""),
+                "confidence": extracted_data.get("Contract Type Confidence", "")
+            }
         }
     }
-
     return contract_data
+
+def validate_extracted_data(extracted_data, order_form_text):
+    if not extracted_data.get("Contract ID"):
+        extracted_data["Contract ID"] = extract_contract_id(order_form_text)
+    if not extracted_data.get("Customer Name"):
+        extracted_data["Customer Name"] = extract_customer_name(order_form_text)
+    if not extracted_data.get("Contract Start Date"):
+        extracted_data["Contract Start Date"] = extract_contract_start_date(order_form_text)
+    if not extracted_data.get("Contract End Date"):
+        extracted_data["Contract End Date"] = extract_contract_end_date(order_form_text)
+    if not extracted_data.get("Payment Terms"):
+        extracted_data["Payment Terms"] = extract_payment_terms(order_form_text)
+    if not extracted_data.get("Contract Amount"):
+        extracted_data["Contract Amount"] = extract_contract_amount(order_form_text)
+    if not extracted_data.get("Billing Frequency"):
+        extracted_data["Billing Frequency"] = extract_billing_frequency(order_form_text)
+    if not extracted_data.get("Contract Type"):
+        extracted_data["Contract Type"] = extract_contract_type(order_form_text)
+    
+    return extracted_data
+    
 
 
 def extraction_prompt_from_dir(text_directory):
@@ -94,7 +250,7 @@ def extraction_prompt_from_dir(text_directory):
             if os.path.isfile(file_path) and text_file.endswith(".txt"):
                 order_form_text = read_file(file_path)
                 if order_form_text:
-                    extracted_data = extraction_prompt(order_form_text)
+                    extracted_data = extract_all_data(order_form_text)
                     all_contracts[text_file] = extracted_data
         return all_contracts
     except Exception as e:
