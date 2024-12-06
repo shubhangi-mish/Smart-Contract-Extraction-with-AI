@@ -69,9 +69,6 @@ This project automates the extraction, validation, and transformation of key fie
 
 To set up the project, follow these steps:
 
-### 1. Clone the Repository
-
-First, clone the repository to your local machine:
 
 ```bash
 git clone <repository_url>
