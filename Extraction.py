@@ -8,7 +8,7 @@ from Zenskar_api import send_contract_to_zenskar
 
 nlp = spacy.load("en_core_web_sm")
 
-client = OpenAI(api_key='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')
+client = OpenAI(api_key='OPEN_AI_API_KEY') #removed while uploading to github 
 
 def call_openai_api(prompt):
     try:
