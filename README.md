@@ -71,6 +71,7 @@ To set up the project, follow these steps:
 
 
 ```bash
+### 1. Clone the repository
 git clone <repository_url>
 cd <project_directory>'''
 
@@ -83,7 +84,12 @@ To set up the project and run it locally, follow the steps below:
 It's highly recommended to use a virtual environment to isolate your dependencies. You can create and activate one using the following commands:
 
 #### On Windows:
-```bash
 python -m venv venv
 .\venv\Scripts\activate
+
+### 3. Install Requirements.txt
+### 4. Run the main.py
+
+
+Voila!!!
 
