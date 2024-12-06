@@ -51,8 +51,8 @@ def main(pdf_directory, output_txt_directory, output_json_directory, summary_rep
         print(f"Error saving summary report: {str(e)}")
 
 if __name__ == "__main__":
-    pdf_directory = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\Contaracts"
-    output_txt_directory = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\Contarcts_Txt"
+    pdf_directory = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\Contracts"
+    output_txt_directory = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\Contracts_Txt"
     output_json_directory = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\Contracts_JSON"
     summary_report_path = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\summary_report.json"
     highlighted_directory = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\Contracts_Highlighted"

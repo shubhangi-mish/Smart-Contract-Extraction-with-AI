@@ -74,7 +74,7 @@ To set up the project, follow these steps:
 
 ```bash
 ### 1. Clone the repository
-git clone <repository_url>
+git clone https://github.com/shubhangi-mish/Smart-Contract-Extraction-with-AI.git
 cd <project_directory>'''
 
 ## Installation Guide
@@ -100,3 +100,22 @@ python main.py
 Voila!!!
 >>>>>>> 614a4d0f702f90d34e53dc4f4e37ba55e5adf98d
 
+The dynamic prompts used in the project are designed to extract specific contract details, including but not limited to the following:
+
+- Contract ID
+- Customer Name
+- Contract Dates (Start and End)
+- Payment Terms
+- Contract Amount
+- Other Metadata
+
+These prompts are dynamic in nature, adapting to the structure and context of the contract text. The prompts are carefully crafted to guide the LLM in identifying the relevant fields based on the contract's content.
+
+Example of a dynamic prompt:
+```plaintext
+Like the prompt for extracting the Contract ID: which is not explictly mentioned so the llm found the SOW which is similar to the required data and unique
+    prompt = f"Extract the contract ID from the following text and only give the ID if nothing give none.\n\n{order_form_text}"
+    Response=
+        "extracted_value": "SOW-CFCU-WCOBCMC-2023",
+        "reasoning": "The extracted contract ID is SOW-CFCU-WCOBCMC-2023, identified in the services description for Product A, indicating the specific statement of work referenced in the order form.",
+        "confidence": "0.8"
