@@ -17,7 +17,11 @@ def call_openai_api(prompt):
             max_tokens=150,
             temperature=0.7
         )
-        message = response.choices[0].message.content.strip()
+        
+        # Extract the content from the response, assuming it's wrapped under choices[0].message.content
+        message = response.choices[0].message.content
+        
+        # Return the content (avoid "null" responses)
         return message if message.lower() != "null" else None
     except Exception as e:
         print(f"Error: {e}")
@@ -32,7 +36,6 @@ def read_file(file_path):
         return None
 
 def extraction_prompt(order_form_text):
-  
     prompts = {
         "Contract ID": f"Extract the 'Order Form Number' from the following text and only give the ID if nothing then Null:\n\n{order_form_text}",
         "Customer Name": f"Extract the 'Client Company Name' from the following text and give only the name nothing else:\n\n{order_form_text}",
@@ -78,13 +81,35 @@ def extraction_prompt(order_form_text):
 
     return contract_data
 
+
 def extraction_prompt_from_dir(text_directory):
     all_contracts = {}
-    for text_file in os.listdir(text_directory):
-        if text_file.endswith(".txt"):
+    if not os.path.isdir(text_directory):
+        print(f"Error: {text_directory} is not a valid directory.")
+        return all_contracts
+
+    try:
+        for text_file in os.listdir(text_directory):
             file_path = os.path.join(text_directory, text_file)
-            order_form_text = read_file(file_path)
-            if order_form_text:
-                extracted_data = extraction_prompt(order_form_text)
-                all_contracts[text_file] = extracted_data
-    return all_contracts
+            if os.path.isfile(file_path) and text_file.endswith(".txt"):
+                order_form_text = read_file(file_path)
+                if order_form_text:
+                    extracted_data = extraction_prompt(order_form_text)
+                    all_contracts[text_file] = extracted_data
+        return all_contracts
+    except Exception as e:
+        print(f"Error: {e}")
+        return all_contracts
+
+def save_contract_json(extracted_data, json_directory):
+    try:
+        os.makedirs(json_directory, exist_ok=True)
+
+        for filename, contract_data in extracted_data.items():
+            json_path = os.path.join(json_directory, f"{filename}.json")
+            with open(json_path, 'w', encoding='utf-8') as json_file:
+                json.dump(contract_data, json_file, ensure_ascii=False, indent=4)
+            print(f"Contract data for {filename} saved successfully.")
+    except Exception as e:
+        print(f"Error saving contract data: {e}")
+

@@ -1,0 +1,142 @@
+Order Form
+Date:
+Order Form Number:
+December 13, 2023
+Expires in 30 days
+Company:
+Address:
+Company A
+9th Floor
+Boston, MA 02111
+Client Information
+Client:
+Client Contact
+Name: Client
+Contact Email:
+Company B
+Billing Contant:
+Bill to Email:
+Bill to Address:
+Rob Keatts
+abc@companyb.comn
+Services Billing:
+Subscription Billing:
+Payment Terms:
+Upfront
+Monthly
+Net 30
+Products
+Professional Services
+Product
+Services Description
+Price
+Discount $
+One-Time Fees
+Product A
+Per Statement of Work
+SOW-CFCU-WCOBCMC-2023
+$10,000
+$10,000
+Product B
+Per Statement of Work
+$15,000
+$15,000
+Product C
+Per Statement of Work
+$5,000
+$5,000
+$0
+Product D
+Per Statement of Work
+$5,000
+$5,000
+$0
+Total:
+$25,000
+Subscription Services
+Product
+Services Description
+Term (Years)
+Renewal Term
+(Year)
+Price
+Discount $
+Monthly Fees
+Product A
+A conversational digital assistant to provide answers to frequently asked questions (FAQs) on a public website.
+3
+1
+$2,500
+$250
+$2,250
+Product B
+The ability for a Posh digital product to transfer a chat to one of the Client's live chat agents.
+3
+1
+$500
+$50
+$450
+Product C
+A conversational digital assistant to provide answers to FAQs within the digital and mobile banking version of
+the authenticated environment.
+3
+1
+$3,500
+$350
+$3,150
+Product D
+The ability for a Posh digital product to transfer a chat to one of the Client's live chat agents.
+3
+1
+$500
+$50
+$450
+Total:
+$6,300
+Included above:
+Analytics Dashboard
+Content Management System
+Unlimited seats for the Client to view data and analytics related to all products purchased.
+Unlimited seats for the Client to view and manage customized content for Digital and Voice products.
+Invoice Schedule
+Year
+Description
+Total
+1
+Upfront, One-Time Implementation Fees
+$25,000
+1
+Minimum Monthly Subscription Fees
+$6,300
+2
+Minimum Monthly Subscription Fees
+$6,300
+3
+Minimum Monthly Subscription Fees
+$6,300
+4
+Minimum Monthly Subscription Fees (Renewed)
+$6,615
+General Terms and Conditions
+Payment Terms:
+Renewal Terms:
+All fees are due Net 30 days from invoice date.
+Professional Services Fees are invoiced within 30 days of Project Kick-off.
+Annual fees are invoiced at "Go-Live", and then annually every year thereafter.
+This Order Form will renew for successive 12 month terms, unless either Party provides written notice of non-renewal to the other Party at least 60 days prior to the end of the current
+Term. Unless otherwise communicated by the parties, in writing, or a new Order Form is executed, an automatic increase of 5% will apply to the Annual Subscription Fees on renewal of
+each Term.
+Effective Dates:
+Subscription Service will commence on the “Go Live” date of each product purchased with the duration of the Order Form Term, at the minimum. End of service date "End Date" will be determined based on the Renewal Terms
+above. If the "Go Live" date does not occur within one year of the order form signing date, the effective subscription start date shall begin on the signing date anniversary, unless mutually agreed upon by both parties.
+Order Form Acceptance and Authorization
+Client Company Name:
+Company B
+Company Name:
+Company A
+Client Signatory Name:
+Date:
+12/15/2023
+Date:
+12/15/2023
+End of Order Form
