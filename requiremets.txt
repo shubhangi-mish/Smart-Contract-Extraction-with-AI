@@ -1,0 +1,10 @@
+pdfplumber
+fitz
+easyocr
+pdf2image
+numpy
+OpenAI 
+spacy download en_core_web_sm 
+json
+re
+requests
