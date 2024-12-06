@@ -3,7 +3,7 @@ import json
 import spacy
 from openai import OpenAI
 from Regex_nlp_validation import validate_contract_amount, extract_billing_frequency, extract_contract_id, extract_contract_type, extract_customer_name, extract_date, extract_payment_terms
-
+from Evaluation_metrics import evaluate_extraction
 nlp = spacy.load("en_core_web_sm")
 
 client = OpenAI(api_key='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')
@@ -21,7 +21,6 @@ def call_openai_api(prompt):
         # Extract the content from the response, assuming it's wrapped under choices[0].message.content
         message = response.choices[0].message.content
         
-        print(message)
         # Return the content (avoid "null" responses)
         return message if message.lower() != "null" else None
     except Exception as e:
@@ -213,6 +212,7 @@ def extract_all_data(order_form_text):
             }
         }
     }
+    evaluate_extraction(contract_data)
     return contract_data
 
 

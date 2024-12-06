@@ -57,11 +57,11 @@ def main(pdf_directory, output_txt_directory, output_json_directory, summary_rep
         print(f"Error saving summary report: {str(e)}")
 
 if __name__ == "__main__":
-    pdf_directory = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\Smart Contracts"
-    output_txt_directory = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\SM_Extracted"
-    output_json_directory = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\SM_JSON"
+    pdf_directory = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\Contaracts"
+    output_txt_directory = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\Contarcts_Txt"
+    output_json_directory = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\Contracts_JSON"
     summary_report_path = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\summary_report.json"
-    highlighted_directory = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\Highlighted pdf"
+    highlighted_directory = r"C:\Users\Shubhangi Mishra\Desktop\Zenskar_Shubhangi_Mishra\Contracts_Highlighted"
     os.makedirs(output_txt_directory, exist_ok=True)
     os.makedirs(output_json_directory, exist_ok=True)
     os.makedirs(highlighted_directory, exist_ok=True)
