@@ -23,7 +23,7 @@ def highlight_extracted_values(pdf_path, json_path, highlighted_pdf_directory):
                             highlight.update()
                             # Extracting text spans
                             span = page.get_text("dict", clip=inst)  # Get the text within the bounding box of the instance
-                            print(f"Found text span: {span}")  # Print or store the text span as needed
+                            print(f"Found text span: {span}")  
 
     for page_num in range(len(doc)):
         page = doc.load_page(page_num)
