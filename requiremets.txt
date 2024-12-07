@@ -8,4 +8,6 @@ spacy download en_core_web_sm
 json
 re
 requests
-sklearn
+scikit-learn
+matplotlib
+datetime

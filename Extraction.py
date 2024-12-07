@@ -2,13 +2,13 @@ import os
 import json
 import spacy
 from openai import OpenAI
-from Regex_nlp_validation import validate_contract_amount, extract_billing_frequency, extract_contract_id, extract_contract_type, extract_customer_name, extract_date, extract_payment_terms
+from Regex_nlp_validation import validate_currency,validate_contract_amount,validate_date,validate_billing_frequency,validate_contract_id,validate_contract_type,validate_customer_name,validate_payment_terms
 from Evaluation_metrics import evaluate_extraction
 from Zenskar_api import send_contract_to_zenskar
 
 nlp = spacy.load("en_core_web_sm")
 
-client = OpenAI(api_key='OPEN_AI_API_KEY') #removed while uploading to github 
+client = OpenAI(api_key='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') #removed while uploading to github 
 
 def call_openai_api(prompt):
     try:
@@ -51,7 +51,7 @@ def extract_contract_id_confidence(order_form_text):
     return call_openai_api(prompt)
 
 def extract_customer_name(order_form_text):
-    prompt = f"Extract the 'Client Company Name' from the following text and give only the name, nothing else.\n\n{order_form_text}"
+    prompt = f"Extract the 'Client Company Name' or the customer name from the following text and give only the name and 1 name only, nothing else.\n\n{order_form_text}"
     return call_openai_api(prompt)
 
 def extract_customer_name_reasoning(order_form_text):
@@ -172,9 +172,11 @@ def extract_all_data(order_form_text):
         "Contract Type Confidence": extract_contract_type_confidence(order_form_text),
     }
 
+    extracted_data["Contract Start Date"] = validate_date(extracted_data["Contract Start Date"])
+    extracted_data["Contract End Date"] = validate_date(extracted_data["Contract End Date"])
 
     contract_data = {
-        "Currency":extracted_data.get("Currency", ""),
+        "Currency": extracted_data.get("Currency", ""),
 
         "Contract ID": {
             "extracted_value": extracted_data.get("Contract ID", ""),
@@ -219,34 +221,30 @@ def extract_all_data(order_form_text):
             }
         }
     }
+
+    if not extracted_data.get("Currency"):
+        extracted_data["Currency"] =validate_currency(extract_currency(order_form_text))
+    if not extracted_data.get("Contract ID"):
+        extracted_data["Contract ID"] = validate_contract_id(extract_contract_id(order_form_text))
+    if not extracted_data.get("Customer Name"):
+        extracted_data["Customer Name"] = validate_customer_name(extract_customer_name(order_form_text))
+    if not extracted_data.get("Contract Start Date"):
+        extracted_data["Contract Start Date"] = validate_date(extract_contract_start_date(order_form_text))
+    if not extracted_data.get("Contract End Date"):
+        extracted_data["Contract End Date"] = validate_date(extract_contract_end_date(order_form_text))
+    if not extracted_data.get("Payment Terms"):
+        extracted_data["Payment Terms"] = validate_payment_terms(extract_payment_terms(order_form_text))
+    if not extracted_data.get("Contract Amount"):
+        extracted_data["Contract Amount"] = validate_contract_amount(extract_contract_amount(order_form_text))
+    if not extracted_data.get("Billing Frequency"):
+        extracted_data["Billing Frequency"] = validate_billing_frequency(extract_billing_frequency(order_form_text))
+    if not extracted_data.get("Contract Type"):
+        extracted_data["Contract Type"] = validate_contract_type(extract_contract_type(order_form_text))
+
     evaluate_extraction(contract_data)
     send_contract_to_zenskar(contract_data)
     return contract_data
-
-
-def validate_extracted_data(extracted_data, order_form_text):
-    if not extracted_data.get("Currency"):
-        extracted_data["Currency"]= extract_currency(order_form_text)
-    if not extracted_data.get("Contract ID"):
-        extracted_data["Contract ID"] = extract_contract_id(order_form_text)
-    if not extracted_data.get("Customer Name"):
-        extracted_data["Customer Name"] = extract_customer_name(order_form_text)
-    if not extracted_data.get("Contract Start Date"):
-        extracted_data["Contract Start Date"] = extract_contract_start_date(order_form_text)
-    if not extracted_data.get("Contract End Date"):
-        extracted_data["Contract End Date"] = extract_contract_end_date(order_form_text)
-    if not extracted_data.get("Payment Terms"):
-        extracted_data["Payment Terms"] = extract_payment_terms(order_form_text)
-    if not extracted_data.get("Contract Amount"):
-        extracted_data["Contract Amount"] = extract_contract_amount(order_form_text)
-    if not extracted_data.get("Billing Frequency"):
-        extracted_data["Billing Frequency"] = extract_billing_frequency(order_form_text)
-    if not extracted_data.get("Contract Type"):
-        extracted_data["Contract Type"] = extract_contract_type(order_form_text)
-    
-    return extracted_data
-    
-
+ 
 
 def extraction_prompt_from_dir(text_directory):
     all_contracts = {}

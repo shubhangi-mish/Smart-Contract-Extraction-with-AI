@@ -61,17 +61,14 @@ def evaluate_extraction(extracted_data):
         "f1_score": f1
     }
 
-    # Print extracted values
     print("Extracted Values:")
     for field, value in extracted_values.items():
         print(f"{field}: {value}")
 
-    # Print evaluation metrics
     print("\nEvaluation Metrics:")
     for metric, value in metrics.items():
         print(f"{metric.capitalize()}: {value:.2f}")
 
-    # Plotting the metrics
     metric_names = list(metrics.keys())
     metric_values = list(metrics.values())
 
