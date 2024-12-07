@@ -21,8 +21,8 @@ def highlight_extracted_values(pdf_path, json_path, highlighted_pdf_directory):
                             highlight = page.add_highlight_annot(inst)
                             highlight.set_colors(stroke=(1, 1, 0))
                             highlight.update()
-                            # Extracting text spans
-                            span = page.get_text("dict", clip=inst)  # Get the text within the bounding box of the instance
+                            
+                            span = page.get_text("dict", clip=inst) 
                             print(f"Found text span: {span}")  
 
     for page_num in range(len(doc)):

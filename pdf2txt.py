@@ -3,7 +3,6 @@ import pdfplumber
 import fitz  # PyMuPDF
 from ocr import ocr_pdf_to_text
 
-# Function to extract text from a PDF file using PyMuPDF (fitz)
 def pdf_to_text(file_path):
     text = ""
     try:
