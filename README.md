@@ -121,16 +121,30 @@ Like the prompt for extracting the Contract ID: which is not explictly mentioned
         "confidence": "0.8"
 
 
-Comparsion between my approach and feeding file directly to LLM
-
 ## Key Differences
 
-| **Aspect**                      | **Text to LLM + NLP + Regex**                       | **PDF to LLM**                             |
-|----------------------------------|-----------------------------------------------------|----------------------------------------------|
-| **Extraction Process**           | Involves multiple steps (text extraction, NLP, regex) | Directly processes the entire document in one step |
-| **Output Structure**             | Structured with explicit reasoning and confidence scores | Informal summary with key details highlighted |
-| **Customization**                | Highly customizable (can fine-tune regex, NLP models) | Less customizable, depends on LLM's inference |
-| **Transparency**                 | High transparency with detailed reasoning and confidence scores | Less transparency (no reasoning or confidence scores) |
-| **Speed**                        | Slower due to multiple steps                        | Faster due to simplicity (single LLM pass)    |
-| **Complexity**                   | More complex, requires setup of multiple components | Simpler, relies only on LLM's inference capabilities |
-| **Resource Usage**               | More resource-intensive (multiple steps, models)    | Less resource-intensive (one LLM pass)       |
+- **Extraction Process**:
+  - **PDF to Text to LLM + NLP + Regex**: Involves multiple steps (text extraction, NLP, regex).
+  - **PDF to LLM**: Directly processes the entire document in one step.
+
+- **Output Structure**:
+  - **PDF to Text to LLM + NLP + Regex**: Structured with explicit reasoning and confidence scores.
+  - **PDF to LLM**: Informal summary with key details highlighted.
+
+- **Customization**:
+  - **PDF to Text to LLM + NLP + Regex**: Highly customizable (can fine-tune regex, NLP models).
+  - **PDF to LLM**: Less customizable, depends on LLM's inference.
+
+- **Transparency**:
+  - **PDF to Text to LLM + NLP + Regex**: High transparency with detailed reasoning and confidence scores.
+  - **PDF to LLM**: Less transparency (no reasoning or confidence scores).
+
+- **Speed**:
+  - **PDF to Text to LLM + NLP + Regex**: Slower due to multiple steps.
+  - **PDF to LLM**: Faster due to simplicity (single LLM pass).
+
+- **Complexity**:
+  - **PDF to Text to LLM + NLP + Regex**: More complex, requires setup of multiple components.
+  - **PDF to LLM**: Simpler, relies only on LLM's inference capabilities.
+
+
