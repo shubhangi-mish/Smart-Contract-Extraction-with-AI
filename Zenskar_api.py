@@ -1,6 +1,9 @@
-import requests
+import openai
 import json
+import requests
+from openai import OpenAI
 
+client = OpenAI(api_key='OPENAI_API_KEY') #removed while submission
 
 def send_contract_to_zenskar(contract_data):
     url = "https://api.zenskar.com/contract_v2"
@@ -28,8 +31,6 @@ def send_contract_to_zenskar(contract_data):
         "contract_link": contract_data.get("contract_link", ""),  
     }
     
-    print("Payload:", payload)
-
    
     API_TOKEN = "ZENSKAR_API_TOKEN"   # Not available
     ORGANISATION_ID = "YOUR_ORGANISATION_ID"  # Unable to create
@@ -51,4 +52,76 @@ def send_contract_to_zenskar(contract_data):
 
     return response
     
+'''
+tools = [
+    {
+        "type": "function",
+        "function": {
+            "name": "send_contract_to_zenskar",
+            "description": "Send the contract data to Zenskar for creation.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "contract_data": {
+                        "type": "object",
+                        "description": "The contract data to be sent to Zenskar.",
+                    }
+                },
+                "required": ["contract_data"],
+                "additionalProperties": False,
+            },
+        }
+    }
+]
 
+messages = [
+    {
+        "role": "system",
+        "content": "You are a helpful assistant. Use the supplied tools to assist the user, including sending contract data to Zenskar."
+    },
+    {
+        "role": "user",
+        "content": "I need to create a contract for Acme Corp. The contract details are as follows..."
+    }
+]
+
+response = openai.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=messages,
+    functions=tools,
+    tool_choice= "auto"
+)
+
+tool_call = response.choices[0].message.tool_calls
+arguments = json.loads(tool_call['arguments'])
+
+contract_data = arguments.get('contract_data')
+
+contract_response = send_contract_to_zenskar(contract_data)
+
+function_call_result_message = {
+    "role": "tool",
+    "content": json.dumps({
+        "contract_id": contract_response.get("id"),
+        "status": "Contract successfully created"
+    }),
+    "tool_call_id": tool_call['id']
+}
+
+completion_payload = {
+    "model": "gpt-4o-mini",
+    "messages": [
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "I need to create a contract for Acme Corp. The contract details are as follows..."},
+        response['choices'][0]['message'],
+        function_call_result_message
+    ]
+}
+
+response = openai.ChatCompletion.create(
+    model=completion_payload["model"],
+    messages=completion_payload["messages"]
+)
+
+print(response)
+'''

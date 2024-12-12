@@ -119,3 +119,18 @@ Like the prompt for extracting the Contract ID: which is not explictly mentioned
         "extracted_value": "SOW-CFCU-WCOBCMC-2023",
         "reasoning": "The extracted contract ID is SOW-CFCU-WCOBCMC-2023, identified in the services description for Product A, indicating the specific statement of work referenced in the order form.",
         "confidence": "0.8"
+
+
+Comparsion between my approach and feeding file directly to LLM
+
+## Key Differences
+
+| **Aspect**                      | **Text to LLM + NLP + Regex**                       | **PDF to LLM**                             |
+|----------------------------------|-----------------------------------------------------|----------------------------------------------|
+| **Extraction Process**           | Involves multiple steps (text extraction, NLP, regex) | Directly processes the entire document in one step |
+| **Output Structure**             | Structured with explicit reasoning and confidence scores | Informal summary with key details highlighted |
+| **Customization**                | Highly customizable (can fine-tune regex, NLP models) | Less customizable, depends on LLM's inference |
+| **Transparency**                 | High transparency with detailed reasoning and confidence scores | Less transparency (no reasoning or confidence scores) |
+| **Speed**                        | Slower due to multiple steps                        | Faster due to simplicity (single LLM pass)    |
+| **Complexity**                   | More complex, requires setup of multiple components | Simpler, relies only on LLM's inference capabilities |
+| **Resource Usage**               | More resource-intensive (multiple steps, models)    | Less resource-intensive (one LLM pass)       |

@@ -22,8 +22,7 @@ def highlight_extracted_values(pdf_path, json_path, highlighted_pdf_directory):
                             highlight.set_colors(stroke=(1, 1, 0))
                             highlight.update()
                             
-                            span = page.get_text("dict", clip=inst) 
-                            print(f"Found text span: {span}")  
+                            span = page.get_text("dict", clip=inst)   
 
     for page_num in range(len(doc)):
         page = doc.load_page(page_num)

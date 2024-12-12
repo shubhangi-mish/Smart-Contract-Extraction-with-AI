@@ -61,10 +61,6 @@ def evaluate_extraction(extracted_data):
         "f1_score": f1
     }
 
-    print("Extracted Values:")
-    for field, value in extracted_values.items():
-        print(f"{field}: {value}")
-
     print("\nEvaluation Metrics:")
     for metric, value in metrics.items():
         print(f"{metric.capitalize()}: {value:.2f}")

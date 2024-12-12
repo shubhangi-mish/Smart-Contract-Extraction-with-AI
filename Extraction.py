@@ -8,7 +8,7 @@ from Zenskar_api import send_contract_to_zenskar
 
 nlp = spacy.load("en_core_web_sm")
 
-client = OpenAI(api_key='OPENAI_API_KEY') #removed while uploading to github 
+client = OpenAI(api_key='OPENAI_API_KEY') #removed while submission
 
 def call_openai_api(prompt):
     try:
@@ -51,7 +51,7 @@ def extract_contract_id_confidence(order_form_text):
     return call_openai_api(prompt)
 
 def extract_customer_name(order_form_text):
-    prompt = f"Extract the 'Client Company Name' or the customer name from the following text and give only the name and 1 name only, nothing else.\n\n{order_form_text}"
+    prompt = f"Extract the Client Company Name or the customer name from the following text and give only the name and 1 name only, nothing else.\n\n{order_form_text}"
     return call_openai_api(prompt)
 
 def extract_customer_name_reasoning(order_form_text):
@@ -241,8 +241,6 @@ def extract_all_data(order_form_text):
     if not extracted_data.get("Contract Type"):
         extracted_data["Contract Type"] = validate_contract_type(extract_contract_type(order_form_text))
 
-    evaluate_extraction(contract_data)
-    send_contract_to_zenskar(contract_data)
     return contract_data
  
 
@@ -260,20 +258,13 @@ def extraction_prompt_from_dir(text_directory):
                 if order_form_text:
                     extracted_data = extract_all_data(order_form_text)
                     all_contracts[text_file] = extracted_data
+
+        evaluate_extraction(all_contracts)
+        send_contract_to_zenskar(all_contracts)
         return all_contracts
     except Exception as e:
         print(f"Error: {e}")
         return all_contracts
 
-def save_contract_json(extracted_data, json_directory):
-    try:
-        os.makedirs(json_directory, exist_ok=True)
 
-        for filename, contract_data in extracted_data.items():
-            json_path = os.path.join(json_directory, f"{filename}.json")
-            with open(json_path, 'w', encoding='utf-8') as json_file:
-                json.dump(contract_data, json_file, ensure_ascii=False, indent=4)
-            print(f"Contract data for {filename} saved successfully.")
-    except Exception as e:
-        print(f"Error saving contract data: {e}")
 
